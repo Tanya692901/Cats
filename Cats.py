@@ -17,11 +17,15 @@ def load_image(url):
         return None
 
 
-def set_image():
+def open_new_window():
     img = load_image(url)
 
     if img:
-        label.config(image=img)
+        new_window = Toplevel()
+        new_window.title("Картинка с котиком")
+        new_window.geometry("600x480")
+        label = Label(new_window, image=img)
+        label.pack()
         label.image = img
 
 def exit():
@@ -33,8 +37,7 @@ window = Tk()
 window.title("Cats")
 window.geometry("600x520")
 
-label = Label()
-label.pack()
+
 
 # update_button = Button(text="обновить", command=set_image)
 # update_button.pack()
@@ -44,7 +47,7 @@ window.config(menu=menubar)
 
 filemenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Файл", menu=filemenu)
-filemenu.add_command(label="Загрузить фото", command=set_image)
+filemenu.add_command(label="Загрузить фото", command=open_new_window)
 filemenu.add_separator()
 filemenu.add_command(label="Выход", command=exit)
 
