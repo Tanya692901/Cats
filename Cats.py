@@ -1,17 +1,13 @@
-from http.client import responses
 from tkinter import *
-from urllib import response
 from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 
-from urllib3.util import url
 
-
-def load_image():
+def load_image(url):
     try:
         responses = requests.get(url)
-        response.raise_for_status()
+        responses.raise_for_status()
         image_data = BytesIO(responses.content)
         img = Image.open(image_data)
         return ImageTk.PhotoImage(img)
@@ -20,8 +16,12 @@ def load_image():
         return None
 
 
+def set_image():
+    img = load_image(url)
 
-
+    if img:
+        label.config(image=img)
+        label.image = img
 
 window = Tk()
 window.title("Cats")
@@ -30,15 +30,11 @@ window.geometry("600x480")
 label = Label()
 label.pack()
 
-Url = "https://cataas.com/cat"
-img = load.Image(Url)
+update_button = Button(text="обновить", command=set_image)
+update_button.pack()
 
-if img:
-    label.configure(image=img)
-    label.image = img
+url = "https://cataas.com/cat"
+
+set_image()
 
 window.mainloop()
-
-
-
-
